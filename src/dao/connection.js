@@ -29,4 +29,3 @@ module.exports = {getConnection};
 //Prueba ag
 //Prueba Midguet
 //Prueba Midguet 2
-//Prueba DAOMidguet 2
