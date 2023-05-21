@@ -26,11 +26,8 @@ function getConnection(){
 }
 
 module.exports = {getConnection};
-<<<<<<< HEAD
 //Midguet esta trabajando
 //Termine de trabajar
-=======
 
 //Agni trabaja en este dao
 //agni termino de trabajar en este dao
->>>>>>> DAOZhircon
