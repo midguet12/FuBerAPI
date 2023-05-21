@@ -26,5 +26,5 @@ function getConnection(){
 }
 
 module.exports = {getConnection};
-
-
+//Midguet esta trabajando
+//Termine de trabajar
