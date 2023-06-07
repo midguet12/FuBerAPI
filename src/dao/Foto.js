@@ -18,6 +18,30 @@ function crearFoto(url){
         });
     });
 }
+function crearFoto(fotoObject){
+    dbConnection = connection.getConnection();
+    dbConnection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        var sql = `INSERT INTO Foto(url) VALUES(' ${fotoObject.url} ')`;
+        dbConnection.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("1 record inserted");
+        });
+    });
+}
+function actualizarFoto(idFoto,url){
+    dbConnection = connection.getConnection();
+    dbConnection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        var sql = `UPDATE Foto SET url = '${url}' WHERE idfoto = ${idFoto}`;
+        dbConnection.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("1 record update");
+        });
+    });
+}
 function borrarFoto(idFoto){
     dbConnection = connection.getConnection();
     dbConnection.connect(function(err) {
@@ -52,4 +76,4 @@ function buscarPorId(idFoto){
         });
     });
 }
-module.exports = {crearFoto,borrarFoto,obtenerTodas,buscarPorId}
+module.exports = {Foto,crearFoto,actualizarFoto,borrarFoto,obtenerTodas,buscarPorId}
