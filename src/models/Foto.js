@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import {sequelize} from '../database/database.js';
-export const Usuario = sequelize.define('Foto',{
+export const Foto = sequelize.define('Foto',{
     idFoto:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -9,7 +9,7 @@ export const Usuario = sequelize.define('Foto',{
     },
     url: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
 },{
     freezeTableName: true,
