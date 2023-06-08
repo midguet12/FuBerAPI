@@ -5,7 +5,6 @@ export const createTarjeta = async (req, res) =>{
         const {idTarjeta,idTienda,monto} = req.body;
 
         const newTarjeta = await TarjetaRecarga.create({
-            idTarjeta,
             idTienda,
             monto
         });

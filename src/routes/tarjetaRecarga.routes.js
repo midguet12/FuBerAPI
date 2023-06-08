@@ -7,7 +7,7 @@ router.post('/tarjeta', createTarjeta);
 //Obtener individual
 router.get('/tarjeta/:idTarjeta', getTarjeta);
 //Actualizar toda la tarjeta
-router.put('/tarjeta/:idTarjeta', updateTarjeta);
+//router.put('/tarjeta/:idTarjeta', updateTarjeta);
 //Actualizar monto de tarjeta
 router.put('/tarjeta/:idTarjeta', updateMonto);
 //Eliminar
