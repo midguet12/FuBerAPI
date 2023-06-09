@@ -34,7 +34,6 @@ app.get("/private", (req,res) => {
         if (Date.now > payload.exp) {
             return res.status({error: "token expirado"})            
         } 
-        
         res.send("Soy privado");
     } catch (error) {
         res.status(401).send({error: error.message})
