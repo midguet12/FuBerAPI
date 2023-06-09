@@ -1,4 +1,4 @@
-import express from "Express";
+import express from "express";
 import usuarioRoutes from "./routes/usuario.routes.js";
 import fotoRoutes from "./routes/foto.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
