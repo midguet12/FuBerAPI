@@ -1,4 +1,10 @@
 import {Usuario} from '../models/Usuario.js';
+var jwt = import("jsonwebtoken");
+import 'dotenv/config'
+//console.log(process.env.SECRET);
+
+
+
 
 export const createUsuario = async (req, res) =>{
     try {

@@ -1,6 +1,9 @@
 import app from './app.js'
 import {sequelize} from './database/database.js';
 
+//import 'dotenv/config'
+//console.log(process.env.SECRET);
+
 async function main(){
   try {
     await sequelize.sync()
