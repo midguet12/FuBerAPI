@@ -1,11 +1,11 @@
-import {Router} from 'Express';
-import {createTarjetaBancaria,deleteTarjetaBancaria,getTarjetaBancaria,getTarjetaSBancarias} from '../controllers/tarjetasbancarias.cotroller.js'
+import {Router} from 'express';
+import {createTarjetaBancaria,deleteTarjetaBancaria,getTarjetaBancaria,getTarjetasBancarias} from '../controllers/tarjetasbancarias.cotroller.js'
 const router = Router();
 
 //Crear 
 router.post('/tarjetabancaria', createTarjetaBancaria)
 //Obtener grupal
-router.get('/tarjetasbancarias', getTarjetaSBancarias)
+router.get('/tarjetasbancarias', getTarjetasBancarias)
 //Obtener individual
 router.get('/tarjetabancaria/:numero', getTarjetaBancaria);
 //Eliminar 
