@@ -1,7 +1,7 @@
 import {Usuario} from '../models/Usuario.js';
 var jwt = import("jsonwebtoken");
 import 'dotenv/config'
-//console.log(process.env.SECRET);
+
 
 
 
