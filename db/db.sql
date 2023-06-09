@@ -10,7 +10,7 @@ create table Usuario(
     saldo float,
     idFoto int,
     primary key(idUsuario, celular, correo)
-)
+);
 
 create table Producto(
     idProducto int not null auto_increment,
