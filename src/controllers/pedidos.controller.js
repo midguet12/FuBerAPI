@@ -3,7 +3,7 @@ import {Pedido} from '../models/Pedido.js';
 export const createPedido = async (req, res) =>{
     try {
         const {idPedido,idTienda,nombreUsuarioComprador} = req.body;
-        const newPedido= await Producto.create({
+        const newPedido= await Pedido.create({
             idPedido,
             idTienda,
             nombreUsuarioComprador
