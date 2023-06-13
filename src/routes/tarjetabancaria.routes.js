@@ -5,7 +5,7 @@ const router = Router();
 //Crear 
 router.post('/tarjetabancaria', createTarjetaBancaria)
 //Obtener grupal
-router.get('/tarjetasbancarias', getTarjetaSBancarias)
+router.get('/tarjetasbancarias', getTarjetasBancarias)
 //Obtener individual
 router.get('/tarjetabancaria/:numero', getTarjetaBancaria);
 //Eliminar 
