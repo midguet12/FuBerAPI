@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createTarjetaBancaria,deleteTarjetaBancaria,getTarjetaBancaria,getTarjetaSBancarias} from '../controllers/tarjetasBancarias.cotroller.js'
+import {createTarjetaBancaria,deleteTarjetaBancaria,getTarjetaBancaria,getTarjetasBancarias} from '../controllers/tarjetasBancarias.controller.js'
 const router = Router();
 
 //Crear 
