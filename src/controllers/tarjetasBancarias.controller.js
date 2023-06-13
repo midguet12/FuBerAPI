@@ -16,7 +16,7 @@ export const createTarjetaBancaria = async (req, res) =>{
     }
 }
 
-export const getTarjetaSBancarias = async (req, res) =>{
+export const getTarjetasBancarias = async (req, res) =>{
     const tarjetasBancarias = await TarjetaBancaria.findAll();
     if(tarjetasBancarias != null){
         res.json(tarjetasBancarias)
