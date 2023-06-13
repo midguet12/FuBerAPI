@@ -16,7 +16,7 @@ export const createUsuario = async (req, res) =>{
             idFoto
         });
 
-        res.json(newUsuario)
+        res.status(201).json(newUsuario)
 
     } catch (error) {
         res.json({error})
@@ -25,10 +25,20 @@ export const createUsuario = async (req, res) =>{
 
 export const getUsuarios = async (req, res) =>{
     try {
-        const usuarios = await Usuario.findAll();
-        res.json(usuarios)
+        let usuarios = await Usuario.findAll();
+        //usuarios = null;
+
+        if (usuarios == null) {
+            res.status(204).json();
+            //res.json({error:"sin usuarios"})
+        } else {
+            res.json(usuarios)
+        }
+
+        
     } catch (error) {
         res.json({error})
+        console.log(error);
     }
     
 }
@@ -44,8 +54,9 @@ export const getUsuario = async(req, res) =>{
         });
 
         if(usuario == null){
-            res.status(204);
-            res.json();
+            res.status(204).json();
+            //res.json({message: "Prueba"});
+            
         }else{
             res.json(usuario) 
         }
@@ -61,33 +72,45 @@ export const updateUsuario = async(req,res) =>{
     const usuario = await Usuario.findByPk(idUsuario);
     const {celular, contrasena, correo, nombreApellidos, saldo, idFoto} = req.body;
 
-    if(usuario != null && saldo>0){
-        usuario.celular = celular;
-        usuario.contrasena = contrasena;
-        usuario.correo = correo;
-        usuario.nombreApellidos = nombreApellidos;
-        usuario.saldo = saldo;
-        usuario.idFoto = idFoto;
-        await usuario.save();
-
-        res.json(usuario);
+    if(usuario != null){
+        if (saldo>0) {
+            usuario.celular = celular;
+            usuario.contrasena = contrasena;
+            usuario.correo = correo;
+            usuario.nombreApellidos = nombreApellidos;
+            usuario.saldo = saldo;
+            usuario.idFoto = idFoto;
+            await usuario.save();
+            res.json(usuario);
+        } else {
+            res.json({error:"Saldo es menor de cero"})
+        }
+        
     }else{
-        res.json({error:"Usuario no existe o saldo es invalido"})
+        res.json({error:"Usuario no existe"})
     }    
 }
 
 export const deleteUsuario = async(req,res) => {
     try {
         const {idUsuario} = req.params;
+        const usuario = await Usuario.findByPk(idUsuario);
 
-        await Usuario.destroy({
-            where: {
-                idUsuario,
-            }
-        });
+        if(usuario!=null){
+            await Usuario.destroy({
+                where: {
+                    idUsuario,
+                }
+            });
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(204);
+        }
 
-        return res.sendStatus(204);
+        
+        
     } catch (error) {
         console.log(error)
+        res.json({message:error})
     }
 }
