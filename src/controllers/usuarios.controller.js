@@ -44,7 +44,8 @@ export const getUsuario = async(req, res) =>{
         });
 
         if(usuario == null){
-            res.json({error: "Usuario con el id indicado no existe"});
+            res.status(204);
+            res.json();
         }else{
             res.json(usuario) 
         }
