@@ -15,7 +15,7 @@ export const createUsuario = async (req, res) =>{
 
     res.json(newUsuario)
     } catch (error) {
-        console.log(error)
+        res.json({error:"Numero de tarjeta ya registrado"})
     }
 }
 

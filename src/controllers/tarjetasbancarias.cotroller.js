@@ -12,27 +12,38 @@ export const createTarjetaBancaria = async (req, res) =>{
 
     res.json(newTarjetaBancaria)
     } catch (error) {
-        console.log(error)
+        res.json({error:"Numero de tarjeta ya registrado o  error en fecha"})
     }
 }
 
 export const getTarjetaSBancarias = async (req, res) =>{
     const tarjetasBancarias = await TarjetaBancaria.findAll();
-    res.json(tarjetasBancarias)
+    if(tarjetasBancarias != null){
+        res.json(tarjetasBancarias)
+    }else{
+        res.json({error:"No hay ninguna tarjeta bancaria registrada"})
+    }
+
 }
 
 export const getTarjetaBancaria = async(req, res) =>{
     const {numero} = req.params;
 
     try {
-        const numeros = await TarjetaBancaria.findOne({
+        const tarjetaB = await TarjetaBancaria.findOne({
             where: {
                 numero,
             }
         });
-        res.json(numeros)
+
+        if(tarjetaB == null){
+            res.status(204).json();
+
+        }
+        res.json(numero)
     } catch (error) {
         console.log(error);
+        res.json({error:"No hay ninguna tarjeta bancaria registrada con ese numero"})
     }    
 }
 
@@ -48,6 +59,6 @@ export const deleteTarjetaBancaria = async(req,res) => {
 
         return res.sendStatus(204);
     } catch (error) {
-        console.log(error)
+        res.json({error:"No hay ninguna tarjeta bancaria registrada para borrar con ese id"})
     }
 }
