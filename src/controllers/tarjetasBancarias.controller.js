@@ -3,27 +3,29 @@ import {TarjetaBancaria} from '../models/TarjetaBancaria.js';
 export const createTarjetaBancaria = async (req, res) =>{
     try {
         const {numero, fechaVencimiento, idUsuario} = req.body;
-
         const newTarjetaBancaria = await TarjetaBancaria.create({
           numero,
           fechaVencimiento,
           idUsuario
         });
-
-    res.json(newTarjetaBancaria)
+    res.status(201).json(newTarjetaBancaria)
     } catch (error) {
-        res.json({error:"Numero de tarjeta ya registrado o  error en fecha"})
+        res.json({error})
     }
 }
 
 export const getTarjetasBancarias = async (req, res) =>{
-    const tarjetasBancarias = await TarjetaBancaria.findAll();
-    if(tarjetasBancarias != null){
-        res.json(tarjetasBancarias)
-    }else{
-        res.json({error:"No hay ninguna tarjeta bancaria registrada"})
+    try{
+        let tarjetasBancarias = await TarjetaBancaria.findAll();
+        if(tarjetasBancarias == null){
+            res.status(204).json();
+        }else{
+            res.json(tarjetasBancarias)
+        }
+    } catch (error){
+        res.json({error})
+        console.log(error);
     }
-
 }
 
 export const getTarjetaBancaria = async(req, res) =>{
@@ -35,12 +37,11 @@ export const getTarjetaBancaria = async(req, res) =>{
                 numero,
             }
         });
-
         if(tarjetaB == null){
             res.status(204).json();
-
+        }else{
+            res.json(numero)
         }
-        res.json(numero)
     } catch (error) {
         console.log(error);
         res.json({error:"No hay ninguna tarjeta bancaria registrada con ese numero"})
@@ -50,13 +51,11 @@ export const getTarjetaBancaria = async(req, res) =>{
 export const deleteTarjetaBancaria = async(req,res) => {
     try {
         const {numero} = req.params;
-
         await TarjetaBancaria.destroy({
             where: {
                 numero,
             }
         });
-
         return res.sendStatus(204);
     } catch (error) {
         res.json({error:"No hay ninguna tarjeta bancaria registrada para borrar con ese id"})
