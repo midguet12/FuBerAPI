@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 
 const secret = process.env.SECRET;
+import tarjetaBancaria from "./routes/tarjetaBancaria.routes.js";
+import  pedido  from "./routes/pedido.routes.js";
 
 
 const app = express();
@@ -47,5 +49,6 @@ app.use(usuarioRoutes);
 app.use(fotoRoutes);
 app.use(productoRoutes);
 app.use(tarjetaRecarga);
-
+app.use(tarjetaBancaria)
+app.use(pedido)
 export default app;
