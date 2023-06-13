@@ -2,7 +2,10 @@ import {Usuario} from '../models/Usuario.js';
 
 export const createUsuario = async (req, res) =>{
     try {
-        const {celular, contrasena, correo, nombreApellidos, saldo, idFoto} = req.body;
+        const {celular, contrasena, correo, nombreApellidos} = req.body;
+
+        const saldo = 0;
+        const idFoto = null;
 
         const newUsuario = await Usuario.create({
             celular,
@@ -13,15 +16,21 @@ export const createUsuario = async (req, res) =>{
             idFoto
         });
 
-    res.json(newUsuario)
+        res.json(newUsuario)
+
     } catch (error) {
-        console.log(error)
+        res.json({error})
     }
 }
 
 export const getUsuarios = async (req, res) =>{
-    const usuarios = await Usuario.findAll();
-    res.json(usuarios)
+    try {
+        const usuarios = await Usuario.findAll();
+        res.json(usuarios)
+    } catch (error) {
+        res.json({error})
+    }
+    
 }
 
 export const getUsuario = async(req, res) =>{
@@ -33,31 +42,37 @@ export const getUsuario = async(req, res) =>{
                 idUsuario,
             }
         });
-        res.json(usuario)
+
+        if(usuario == null){
+            res.json({error: "Usuario con el id indicado no existe"});
+        }else{
+            res.json(usuario) 
+        }
+
     } catch (error) {
         console.log(error);
+        res.json({error})
     }    
 }
 
 export const updateUsuario = async(req,res) =>{
-    try {
-        const {idUsuario} = req.params;
-        const {celular, contrasena, correo, nombreApellidos, saldo, idFoto} = req.body;
+    const {idUsuario} = req.params;
+    const usuario = await Usuario.findByPk(idUsuario);
+    const {celular, contrasena, correo, nombreApellidos, saldo, idFoto} = req.body;
 
-        const usuario = await Usuario.findByPk(idUsuario);
+    if(usuario != null && saldo>0){
         usuario.celular = celular;
         usuario.contrasena = contrasena;
         usuario.correo = correo;
         usuario.nombreApellidos = nombreApellidos;
         usuario.saldo = saldo;
         usuario.idFoto = idFoto;
-
         await usuario.save();
-        res.json(usuario);
 
-    } catch (error) {
-        console.log(error);
-    }
+        res.json(usuario);
+    }else{
+        res.json({error:"Usuario no existe o saldo es invalido"})
+    }    
 }
 
 export const deleteUsuario = async(req,res) => {
