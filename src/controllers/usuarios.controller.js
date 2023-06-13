@@ -83,11 +83,14 @@ export const updateUsuario = async(req,res) =>{
             await usuario.save();
             res.json(usuario);
         } else {
-            res.json({error:"Saldo es menor de cero"})
+            
+            res.status(400);
+            res.json({message: "Saldo es menor que cero"});
         }
         
     }else{
-        res.json({error:"Usuario no existe"})
+        res.status(204);
+        //res.json({message:"Usuario no existe"})
     }    
 }
 
