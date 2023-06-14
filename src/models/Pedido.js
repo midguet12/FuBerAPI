@@ -5,7 +5,7 @@ export const Pedido =  sequelize.define('Pedido',{
     idPedido: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false
+        autoIncrement: true
     },
     idTienda: {
         type: DataTypes.INTEGER, 
