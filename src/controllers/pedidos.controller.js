@@ -47,7 +47,7 @@ export const getPedido = async(req, res) =>{
         });
 
         if (pedido!=null) {
-            res.json(pedido);
+            res.status(200).json(pedido);
         } else {
             res.status(204).json()
         }
