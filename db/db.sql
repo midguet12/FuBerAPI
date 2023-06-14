@@ -34,7 +34,8 @@ create table Tienda(
 
 create table Pedido(
     idPedido int not null auto_increment,
-    nombreUsuarioComprador int not null,
+    idUsuarioComprador int not null,
+    idUsuarioVendedor int not null,
     idTienda int not null,
     primary key(idPedido)
 );
