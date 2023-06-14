@@ -2,15 +2,18 @@ import {TarjetaRecarga} from '../models/TarjetaRecarga.js';
 
 export const createTarjeta = async (req, res) =>{
     try {
-        const {idTarjeta,idTienda,monto} = req.body;
-
-        const newTarjeta = await TarjetaRecarga.create({
-            idTienda,
-            monto
-        });
-
-    res.json(newTarjeta)
+        const {idTienda,monto} = req.body;
+        if (monto>0) {
+            const newTarjeta = await TarjetaRecarga.create({
+                idTienda,
+                monto
+            });
+            res.status(201).json(newTarjeta);
+        } else {
+            res.status(400).json({message: "Monto invalido"});
+        }
     } catch (error) {
+        res.json({error:`${error}`})
         console.log(error)
     }
 }
