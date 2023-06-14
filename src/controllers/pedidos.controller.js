@@ -2,21 +2,34 @@ import {Pedido} from '../models/Pedido.js';
 
 export const createPedido = async (req, res) =>{
     try {
-        const {idPedido,idTienda,nombreUsuarioComprador} = req.body;
-        const newPedido= await Pedido.create({
-            idPedido,
-            idTienda,
-            nombreUsuarioComprador
-        });
-    res.json(newPedido)
+        const {idTienda,idUsuarioComprador, idUsuarioVendedor} = req.body;
+
+        if (idTienda>0 && idUsuarioComprador>0 && idUsuarioVendedor>0) {
+            const newPedido= await Pedido.create({
+                idTienda,
+                idUsuarioComprador,
+                idUsuarioVendedor
+            });
+            res.status(201).json(newPedido)
+        } else {
+            res.status(400).json({message: "Datos invalidos"});
+        }
+
     } catch (error) {
+        res.json({error:`${error}`})
         console.log(error)
     }
 }
 
 export const getPedidos = async (req, res) =>{
     const pedidos = await Pedido.findAll();
-    res.json(pedidos)
+    if(pedidos !=null){
+        res.json(pedidos)
+    }else{
+        
+        res.json({message:"No hay pedidos registrados"})
+    }
+    
 }
 
 export const getPedido = async(req, res) =>{
@@ -28,40 +41,65 @@ export const getPedido = async(req, res) =>{
                 idPedido,
             }
         });
-        res.json(pedido)
+
+        if (pedido!=null) {
+            res.json(pedido);
+        } else {
+            res.status(204).json()
+        }
+        
     } catch (error) {
         console.log(error);
+        res.json({error:`${error}`})
     }    
 }
 
 export const updatePedido = async(req,res) =>{
-    try {
-        const {idPedido} = req.params;
-        const {idTienda,nombreUsuarioComprador} = req.body;
+    const {idPedido} = req.params;
+    let pedido = await Pedido.findByPk(idPedido);
+    const {idTienda,idUsuarioComprador, idUsuarioVendedor} = req.body;
+    try { 
+        if (pedido!=null) {
+            if (idTienda>0 && idUsuarioComprador>0 && idUsuarioVendedor>0) {
 
-        const pedido = await Pedido.findByPk(idPedido);
-        pedido.idTienda = idTienda,
-        pedido.nombreUsuarioComprador = nombreUsuarioComprador,
-
-        await pedido.save();
-        res.json(pedido);
+                pedido.idTienda = idTienda;
+                pedido.idUsuarioComprador = idUsuarioComprador;
+                pedido.idUsuarioVendedor = idUsuarioVendedor;
+            
+                await pedido.save();
+                res.status(201).json(pedido)
+            } else {
+                res.status(400).json({message: "Datos invalidos"});
+            }
+        } else {
+            res.status(204).json();
+        } 
 
     } catch (error) {
         console.log(error);
+        res.json({error:`${error}`});
+
     }
 }
 
 export const deletePedido = async(req,res) => {
     try {
         const {idPedido} = req.params;
-
-        await Pedido.destroy({
-            where: {
-                idPedido,
-            }
-        });
-        return res.sendStatus(204);
+        const pedido = await Pedido.findByPk(idPedido);
+        
+        if (pedido!=null) {
+            await Pedido.destroy({
+                where: {
+                    idPedido,
+                }
+            });
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(204);
+        }
+        
     } catch (error) {
         console.log(error)
+        res.json({error:`${error}`})
     }
 }
