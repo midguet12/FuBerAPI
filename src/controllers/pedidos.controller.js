@@ -22,12 +22,16 @@ export const createPedido = async (req, res) =>{
 }
 
 export const getPedidos = async (req, res) =>{
-    const pedidos = await Pedido.findAll();
-    if(pedidos !=null){
-        res.json(pedidos)
-    }else{
-        
-        res.json({message:"No hay pedidos registrados"})
+    try {
+        const pedidos = await Pedido.findAll();
+        if(pedidos !=null){
+            res.json(pedidos)
+        }else{
+            res.status(204).json();
+        }
+    } catch (error) {
+        res.json({error:`${error}`})
+        console.log(error)
     }
     
 }
