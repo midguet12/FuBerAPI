@@ -3,7 +3,7 @@ import usuarioRoutes from "./routes/usuario.routes.js";
 import fotoRoutes from "./routes/foto.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
 import tarjetaRecarga from "./routes/tarjetaRecarga.routes.js";
-import tarjetaBancaria from "./routes/tarjetaBancaria.routes.js";
+import tarjetaBancaria from "./routes/tarjetaBancaria.routes.js"
 import  pedido  from "./routes/pedido.routes.js";
 
 
