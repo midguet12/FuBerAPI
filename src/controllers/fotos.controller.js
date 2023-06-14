@@ -1,3 +1,4 @@
+import { INTEGER } from 'sequelize';
 import {Foto} from '../models/Foto.js';
 
 export const createFoto= async (req, res) =>{

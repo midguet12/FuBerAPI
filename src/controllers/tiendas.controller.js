@@ -3,7 +3,7 @@ import {Tienda} from '../models/Tienda.js';
 export const createTienda = async (req, res) =>{
     try {
         const {celular,direccion,idUsuario,nombre} = req.body;
-        if(celular>0 && direccion>0 && idUsuario>0 && nombre>0){
+        if(idUsuario>0){
             const newTienda = await Tienda.create({
                 celular,
                 direccion,
@@ -73,7 +73,7 @@ export const updateTienda = async(req,res) =>{
         const {celular,direccion,idUsuario,nombre} = req.body;
         const tienda = await Tienda.findByPk(idTienda);
         if(tienda != null ){
-            if(celular>0 && direccion>0 && idUsuario>0&&nombre>0){
+            if(idUsuario > 0 ){
                 tienda.celular = celular,
                 tienda.direccion = direccion,
                 tienda.idUsuario = idUsuario,
@@ -83,6 +83,8 @@ export const updateTienda = async(req,res) =>{
                 }else{
                     res.status(400).json(tienda);
                 }
+            }else{
+                res.status(400).json({message:"Datos invalidos"});
             }
         }else{
             res.sendStatus(204);
