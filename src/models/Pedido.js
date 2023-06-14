@@ -11,10 +11,15 @@ export const Pedido =  sequelize.define('Pedido',{
         type: DataTypes.INTEGER, 
         allowNull: false
     },
-    nombreUsuarioComprador: {
+    idUsuarioComprador: {
         type: DataTypes.INTEGER, 
         allowNull: false
+    },
+    idUsuarioVendedor:{
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
+
 },{
         freezeTableName: true,
         timestamps: false
