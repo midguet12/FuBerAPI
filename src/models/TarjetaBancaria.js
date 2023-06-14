@@ -3,7 +3,7 @@ import {sequelize} from '../database/database.js';
 
 export const TarjetaBancaria =  sequelize.define('TarjetaBancaria',{
     numero: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
         autoIncrement: false
     },

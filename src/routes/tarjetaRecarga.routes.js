@@ -1,4 +1,4 @@
-import {Router} from 'Express';
+import {Router} from 'express';
 import {createTarjeta,getTarjeta,updateTarjeta,updateMonto,deleteTarjeta} from '../controllers/tarjetaRecarga.controller.js'
 const router = Router();
 
