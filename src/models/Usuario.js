@@ -27,10 +27,6 @@ export const Usuario = sequelize.define('Usuario',{
     saldo: {
         type: DataTypes.FLOAT,
         allowNull: true
-    },
-    idFoto: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     }
 },{
     freezeTableName: true,

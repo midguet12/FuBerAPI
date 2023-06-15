@@ -24,10 +24,6 @@ export const Producto = sequelize.define('Producto',{
         type: DataTypes.FLOAT,
         allowNull: true
     },
-    idFoto:{
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
     titulo:{
         type: DataTypes.STRING,
         allowNull:true
