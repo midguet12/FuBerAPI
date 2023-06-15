@@ -2,10 +2,9 @@
 import {Tienda} from '../models/Tienda.js';
 export const createTienda = async (req, res) =>{
     try {
-        const {celular,direccion,idUsuario,nombre} = req.body;
+        const {direccion,idUsuario,nombre} = req.body;
         if(idUsuario>0){
             const newTienda = await Tienda.create({
-                celular,
                 direccion,
                 idUsuario,
                 nombre
@@ -78,10 +77,9 @@ export const updateTienda = async(req,res) =>{
         const tienda = await Tienda.findByPk(idTienda);
         if(tienda != null ){
             if(idUsuario > 0 ){
-                tienda.idTienda = idTienda
-                tienda.celular = celular,
-                tienda.direccion = direccion,
-                tienda.idUsuario = idUsuario,
+                tienda.idTienda = idTienda;
+                tienda.direccion = direccion;
+                tienda.idUsuario = idUsuario;
                 tienda.nombre = nombre;
                 if (await tienda.save() != null){
                     res.status(200).json(tienda);
