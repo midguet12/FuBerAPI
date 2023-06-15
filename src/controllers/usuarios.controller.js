@@ -79,6 +79,7 @@ export const getUsuario = async(req, res) =>{
 }
 
 export const autenticarUsuario = async(req,res) =>{
+    console.log("autenticacion entrante")
     const {correo, contrasena} = req.params;
     try {
         const usuario = await Usuario.findOne({
@@ -96,7 +97,7 @@ export const autenticarUsuario = async(req,res) =>{
             console.log(token);
             res.json({token:`${token}`})
         }else{
-            res.json({message: "no autenticado"})
+            res.json({token: "no autenticado"})
         }
 
 

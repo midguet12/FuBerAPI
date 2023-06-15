@@ -8,7 +8,6 @@ router.post('/usuario', createUsuario)
 router.get('/usuarios', getUsuarios)
 //Obtener individual
 router.get('/usuario/:idUsuario', getUsuario);
-
 //Autenticar usuario
 router.get('/usuario/iniciarsesion/:correo&:contrasena',autenticarUsuario)
 //Actualizar 
