@@ -43,30 +43,34 @@ export const getTiendas = async (req, res) =>{
 
 export const getTienda = async(req, res) =>{
     const {idTienda} = req.params;
-            try {
-                if(idTienda>0){
-                    const tienda = await Tienda.findOne({
-                        where: {
-                            idTienda,
-                        }
-                    });
-                    if(tienda!=null){
-                        res.status(200).json(tienda)
-                    }else{
-                        res.sendStatus(204);
-                    }
-                }else{
-                    res.status(400);
-                    res.json({message: "Datos invalidos"});
+    try {
+        if(idTienda>0){
+            const tienda = await Tienda.findOne({
+                where: {
+                    idTienda,
                 }
-
-                 
-            } catch (error) {
-                console.log(error);
-                res.json({error:`${error}`});
-            }    
+            });
+            if(tienda!=null){
+                res.status(200).json(tienda)
+            }else{
+                res.sendStatus(204);
+            }
+        }else{
+            res.status(400);
+            res.json({message: "Datos invalidos"});
         }
-     
+
+            
+    } catch (error) {
+        console.log(error);
+        res.json({error:`${error}`});
+    }    
+}
+
+export const getFotoTienda = (req, res) =>{
+    const idFoto = req.params;
+    res.json(`http://themaisonblue.com/tienda/${idFoto}.jpg`)
+}
 
 export const updateTienda = async(req,res) =>{
     try {
