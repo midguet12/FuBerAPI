@@ -1,14 +1,17 @@
 import {Console} from 'console';
-import {Producto} from '../models//Producto.js';
+import {Producto} from '../models/Producto.js';
 
 export const createProducto = async (req, res) =>{
     try {
-        const {idFoto,descripcion,existencia} = req.body;
-        if(idFoto>0){
+        const {descripcion,existencia,idTienda,precio,idFoto,titulo} = req.body;
+        if(idFoto>0 && existencia>0 && idTienda>0 && precio>0){
             const newProducto = await Producto.create({
-                idFoto,
                 descripcion,
-                existencia
+                existencia,
+                idTienda,
+                precio,
+                idFoto,
+                titulo
             });
             if(newProducto != null){
                 res.status(201).json(newProducto);
@@ -28,8 +31,10 @@ export const createProducto = async (req, res) =>{
 export const getProductos = async (req, res) =>{
     try{
         const productos = await Producto.findAll();
+
         if(productos != null){
             res.status(200).json(productos);
+            console.log(productos)
         }else{
             res.sendStatus(204).json();
         }

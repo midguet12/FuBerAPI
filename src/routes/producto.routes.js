@@ -1,17 +1,17 @@
-import {Router} from 'Express';
+import {Router} from 'express';
 import {createProducto, getProductos, getProducto, updateProducto, deleteProducto} from '../controllers/productos.controller.js'
 const router = Router();
 
 //Crear 
-router.post('/Producto', createProducto)
+router.post('/producto', createProducto)
 //Obtener grupal
-router.get('/Productos', getProductos)
+router.get('/productos', getProductos)
 //Obtener individual
-router.get('/Producto/:idProducto', getProducto);
+router.get('/producto/:idProducto', getProducto);
 //Actualizar 
-router.put('/Producto/:idProducto', updateProducto);
+router.put('/producto/:idProducto', updateProducto);
 //Eliminar
-router.delete('/Producto/:idProducto', deleteProducto)
+router.delete('/producto/:idProducto', deleteProducto)
 
 
 export default router;
