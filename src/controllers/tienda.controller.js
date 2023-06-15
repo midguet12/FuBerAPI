@@ -80,7 +80,6 @@ export const updateTienda = async(req,res) =>{
                 tienda.direccion = direccion,
                 tienda.idUsuario = idUsuario,
                 tienda.nombre = nombre;
-                tienda.idFoto = idFoto;
                 if (await tienda.save() != null){
                     res.status(200).json(tienda);
                 }else{
