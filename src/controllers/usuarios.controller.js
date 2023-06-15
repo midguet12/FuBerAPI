@@ -32,13 +32,12 @@ export const getUsuarios = async (req, res) =>{
     try {
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         let usuarios = await Usuario.findAll();
-        //usuarios = null;
-
         if (usuarios != null) {
-            if (Date.now > payload.exp) {
-                return res.status({error: "token expirado"}) 
-            }
+            
             res.json(usuarios)
         } else {
             res.status(204).json();

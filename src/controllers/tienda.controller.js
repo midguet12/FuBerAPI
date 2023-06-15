@@ -5,8 +5,14 @@ import 'dotenv/config'
 const secret = process.env.SECRET;
 
 export const createTienda = async (req, res) =>{
+
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
         const {direccion,idUsuario,nombre} = req.body;
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         if(idUsuario>0){
             const newTienda = await Tienda.create({
                 direccion,
@@ -14,6 +20,7 @@ export const createTienda = async (req, res) =>{
                 nombre
             });
             if(newTienda != null){
+                
                 res.status(201).json(newTienda);
             }else{
                 res.status(400).json({message:"Datos invalido"});
@@ -32,11 +39,11 @@ export const getTiendas = async (req, res) =>{
     try{
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const tiendas = await Tienda.findAll();
         if(tiendas != null){
-            if (Date.now > payload.exp) {
-                return res.status({error: "token expirado"}) 
-            }
             res.status(200).json(tiendas);
         }else{
             res.sendStatus(204).json();
@@ -51,6 +58,11 @@ export const getTiendas = async (req, res) =>{
 export const getTienda = async(req, res) =>{
     const {idTienda} = req.params;
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         if(idTienda>0){
             const tienda = await Tienda.findOne({
                 where: {
@@ -76,14 +88,25 @@ export const getTienda = async(req, res) =>{
 
 export const getFotoTienda = (req, res) =>{
     const {idTienda} = req.params;
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = jwt.verify(token, secret);
+    if (Date.now > payload.exp) {
+        return res.status({error: "token expirado"}) 
+    }
     res.json(`http://themaisonbleue.com:4080/tienda/${idTienda}.jpg`)
 }
 
 export const updateTienda = async(req,res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTienda} = req.params;
-        const {celular,direccion,idUsuario,nombre, idFoto} = req.body;
+        const {direccion,idUsuario,nombre} = req.body;
         const tienda = await Tienda.findByPk(idTienda);
+        
         if(tienda != null ){
             if(idUsuario > 0 ){
                 tienda.idTienda = idTienda;
@@ -109,6 +132,11 @@ export const updateTienda = async(req,res) =>{
 
 export const deleteTienda = async(req,res) => {
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTienda} = req.params;
         if(idTienda>0){
             await Tienda.destroy({
