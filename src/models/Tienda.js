@@ -7,10 +7,6 @@ export const Tienda = sequelize.define('Tienda',{
         autoIncrement: true,
         allowNull: false
     },
-    celular: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     direccion: {
         type: DataTypes.STRING,
         allowNull : true
