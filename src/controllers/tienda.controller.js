@@ -1,5 +1,8 @@
 
 import {Tienda} from '../models/Tienda.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
+
 export const createTienda = async (req, res) =>{
     try {
         const {direccion,idUsuario,nombre} = req.body;
@@ -25,9 +28,15 @@ export const createTienda = async (req, res) =>{
 }
 
 export const getTiendas = async (req, res) =>{
+
     try{
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
         const tiendas = await Tienda.findAll();
         if(tiendas != null){
+            if (Date.now > payload.exp) {
+                return res.status({error: "token expirado"}) 
+            }
             res.status(200).json(tiendas);
         }else{
             res.sendStatus(204).json();

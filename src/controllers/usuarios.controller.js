@@ -35,13 +35,13 @@ export const getUsuarios = async (req, res) =>{
         let usuarios = await Usuario.findAll();
         //usuarios = null;
 
-        if (usuarios == null) {
-            res.status(204).json();
-        } else {
+        if (usuarios != null) {
             if (Date.now > payload.exp) {
                 return res.status({error: "token expirado"}) 
             }
             res.json(usuarios)
+        } else {
+            res.status(204).json();
         }
 
         
@@ -95,7 +95,7 @@ export const autenticarUsuario = async(req,res) =>{
             console.log(token);
             res.json({token:`${token}`})
         }else{
-            res.json({token: "no autenticado"})
+            res.json({token:"no"})
         }
 
 
