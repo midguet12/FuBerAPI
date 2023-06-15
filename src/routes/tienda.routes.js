@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createTienda,getTiendas,getTienda,deleteTienda,updateTienda} from '../controllers/tiendas.controller.js'
+import {createTienda,getTiendas,getTienda,deleteTienda,updateTienda} from '../controllers/tienda.controller.js'
 const router = Router();
 
 //Crear 
