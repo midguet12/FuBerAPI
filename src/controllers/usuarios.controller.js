@@ -11,7 +11,6 @@ export const createUsuario = async (req, res) =>{
         const {celular, contrasena, correo, nombreApellidos} = req.body;
 
         const saldo = 0;
-        const idFoto = null;
 
         const newUsuario = await Usuario.create({
             celular,
