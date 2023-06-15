@@ -18,8 +18,7 @@ export const createUsuario = async (req, res) =>{
             contrasena,
             correo,
             nombreApellidos,
-            saldo,
-            idFoto
+            saldo
         });
 
         res.status(201).json(newUsuario)
@@ -110,7 +109,7 @@ export const autenticarUsuario = async(req,res) =>{
 export const updateUsuario = async(req,res) =>{
     const {idUsuario} = req.params;
     const usuario = await Usuario.findByPk(idUsuario);
-    const {celular, contrasena, correo, nombreApellidos, saldo, idFoto} = req.body;
+    const {celular, contrasena, correo, nombreApellidos, saldo} = req.body;
 
     if(usuario != null){
         if (saldo>0) {
@@ -119,7 +118,6 @@ export const updateUsuario = async(req,res) =>{
             usuario.correo = correo;
             usuario.nombreApellidos = nombreApellidos;
             usuario.saldo = saldo;
-            usuario.idFoto = idFoto;
             await usuario.save();
             res.json(usuario);
         } else {

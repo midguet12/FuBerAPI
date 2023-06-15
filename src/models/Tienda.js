@@ -22,10 +22,6 @@ export const Tienda = sequelize.define('Tienda',{
     nombre:{
         type: DataTypes.STRING,
         allowNull:true
-    },
-    idFoto:{
-        type: DataTypes.INTEGER,
-        allowNull: true
     }
 
 },{

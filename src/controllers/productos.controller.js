@@ -3,14 +3,13 @@ import {Producto} from '../models/Producto.js';
 
 export const createProducto = async (req, res) =>{
     try {
-        const {descripcion,existencia,idTienda,precio,idFoto,titulo} = req.body;
+        const {descripcion,existencia,idTienda,precio,titulo} = req.body;
         if(idFoto>0 && existencia>0 && idTienda>0 && precio>0){
             const newProducto = await Producto.create({
                 descripcion,
                 existencia,
                 idTienda,
                 precio,
-                idFoto,
                 titulo
             });
             if(newProducto != null){
@@ -75,7 +74,7 @@ export const getProducto = async(req, res) =>{
 export const updateProducto = async(req,res) =>{
     try {
         const {idProducto} = req.params;
-        const {descripcion,existencia,idTienda,precio,idFoto,titulo} = req.body;
+        const {descripcion,existencia,idTienda,precio,titulo} = req.body;
         const producto = await Producto.findByPk(idProducto);
         if(producto != null ){
             if(idFoto > 0 ){
@@ -84,7 +83,6 @@ export const updateProducto = async(req,res) =>{
                 producto.existencia = existencia;
                 producto.idTienda = idTienda;
                 producto.precio = precio;
-                producto.idFoto = idFoto,
                 producto.titulo = titulo;
                 
                 if (await producto.save() != null){

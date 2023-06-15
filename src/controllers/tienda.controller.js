@@ -2,14 +2,13 @@
 import {Tienda} from '../models/Tienda.js';
 export const createTienda = async (req, res) =>{
     try {
-        const {celular,direccion,idUsuario,nombre, idFoto} = req.body;
+        const {celular,direccion,idUsuario,nombre} = req.body;
         if(idUsuario>0){
             const newTienda = await Tienda.create({
                 celular,
                 direccion,
                 idUsuario,
-                nombre,
-                idFoto
+                nombre
             });
             if(newTienda != null){
                 res.status(201).json(newTienda);
@@ -69,8 +68,7 @@ export const getTienda = async(req, res) =>{
 
 export const getFotoTienda = (req, res) =>{
     const {idTienda} = req.params;
-    
-    res.json(`http://themaisonblue.com/tienda/${idTienda}.jpg`)
+    res.json(`http://themaisonbleue.com:4080/tienda/${idTienda}.jpg`)
 }
 
 export const updateTienda = async(req,res) =>{
