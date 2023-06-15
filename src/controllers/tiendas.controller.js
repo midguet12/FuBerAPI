@@ -1,4 +1,4 @@
-import {Console} from 'console';
+
 import {Tienda} from '../models/Tienda.js';
 export const createTienda = async (req, res) =>{
     try {
