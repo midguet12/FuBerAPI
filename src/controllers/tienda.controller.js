@@ -2,6 +2,7 @@
 import {Tienda} from '../models/Tienda.js';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config'
+const secret = process.env.SECRET;
 
 export const createTienda = async (req, res) =>{
     try {
@@ -28,7 +29,6 @@ export const createTienda = async (req, res) =>{
 }
 
 export const getTiendas = async (req, res) =>{
-
     try{
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, secret);
