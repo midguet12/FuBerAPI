@@ -1,8 +1,8 @@
 import {Usuario} from '../models/Usuario.js';
-var jwt = import("jsonwebtoken");
+import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 
-
+const secret = process.env.SECRET;
 
 
 
@@ -30,14 +30,19 @@ export const createUsuario = async (req, res) =>{
 }
 
 export const getUsuarios = async (req, res) =>{
+    
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
         let usuarios = await Usuario.findAll();
         //usuarios = null;
 
         if (usuarios == null) {
             res.status(204).json();
-            //res.json({error:"sin usuarios"})
         } else {
+            if (Date.now > payload.exp) {
+                return res.status({error: "token expirado"}) 
+            }
             res.json(usuarios)
         }
 
@@ -60,7 +65,7 @@ export const getUsuario = async(req, res) =>{
         });
 
         if(usuario == null){
-            res.status(204).json();
+            res.sendStatus(204);
             //res.json({message: "Prueba"});
             
         }else{
@@ -69,8 +74,36 @@ export const getUsuario = async(req, res) =>{
 
     } catch (error) {
         console.log(error);
-        res.json({error})
+        res.json({error:`${error}`})
     }    
+}
+
+export const autenticarUsuario = async(req,res) =>{
+    const {correo, contrasena} = req.params;
+    try {
+        const usuario = await Usuario.findOne({
+            where: {
+                correo,
+            }
+        });
+
+        if (usuario.contrasena == contrasena) {
+            const token = jwt.sign({
+                correo,
+                contrasena,
+                exp: Date.now() + 86400 * 1000
+            }, secret);
+            console.log(token);
+            res.json({token:`${token}`})
+        }else{
+            res.json({message: "no autenticado"})
+        }
+
+
+    } catch (error) {
+        console.log(error);
+        res.json({error:`${error}`})
+    }
 }
 
 export const updateUsuario = async(req,res) =>{
@@ -120,6 +153,7 @@ export const deleteUsuario = async(req,res) => {
         
     } catch (error) {
         console.log(error)
-        res.json({message:error})
+        res.json({error:`${error}`})
     }
 }
+

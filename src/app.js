@@ -8,7 +8,6 @@ import 'dotenv/config'
 
 const secret = process.env.SECRET;
 import tarjetaBancaria from "./routes/tarjetaBancaria.routes.js";
-import tarjetaBancaria from "./routes/tarjetaBancaria.routes.js"
 import  pedido  from "./routes/pedido.routes.js";
 
 
