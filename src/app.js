@@ -1,6 +1,7 @@
 import express from "express";
 import usuarioRoutes from "./routes/usuario.routes.js";
 import fotoRoutes from "./routes/foto.routes.js";
+import tiendaRoutes from "./routes/tienda.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
 import tarjetaRecarga from "./routes/tarjetaRecarga.routes.js";
 import jwt from 'jsonwebtoken';
@@ -49,6 +50,7 @@ app.use(usuarioRoutes);
 app.use(fotoRoutes);
 app.use(productoRoutes);
 app.use(tarjetaRecarga);
-app.use(tarjetaBancaria)
-app.use(pedido)
+app.use(tarjetaBancaria);
+app.use(pedido);
+app.use(tiendaRoutes);
 export default app;
