@@ -68,8 +68,9 @@ export const getTienda = async(req, res) =>{
 }
 
 export const getFotoTienda = (req, res) =>{
-    const idFoto = req.params;
-    res.json(`http://themaisonblue.com/tienda/${idFoto}.jpg`)
+    const {idTienda} = req.params;
+    
+    res.json(`http://themaisonblue.com/tienda/${idTienda}.jpg`)
 }
 
 export const updateTienda = async(req,res) =>{

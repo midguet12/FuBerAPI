@@ -9,7 +9,7 @@ router.get('/tiendas', getTiendas)
 //Obtener individual
 router.get('/tienda/:idTienda', getTienda);
 //Obtener foto
-router.get('/tienda/foto/:idTienda'.getFotoTienda);
+router.get('/tienda/foto/:idTienda',getFotoTienda);
 //Eliminar 
 router.delete('/tienda/:idTienda', deleteTienda);
 //Actualizar
