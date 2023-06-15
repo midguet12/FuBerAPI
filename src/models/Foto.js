@@ -6,10 +6,6 @@ export const Foto = sequelize.define('Foto',{
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
-    },
-    url: {
-        type: DataTypes.STRING,
-        allowNull: true
     }
 },{
     freezeTableName: true,

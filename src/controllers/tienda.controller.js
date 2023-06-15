@@ -8,7 +8,8 @@ export const createTienda = async (req, res) =>{
                 celular,
                 direccion,
                 idUsuario,
-                nombre
+                nombre,
+                idFoto
             });
             if(newTienda != null){
                 res.status(201).json(newTienda);

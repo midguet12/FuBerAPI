@@ -1,19 +1,12 @@
 import { INTEGER } from 'sequelize';
 import {Foto} from '../models/Foto.js';
 
-export const createFoto= async (req, res) =>{
+export const createFoto = async (req, res) =>{
     
     try {
-        const {url} = req.body;
-        if (url !=null) {
-            console.log("se cumple");
-            const newFoto = await Foto.create({
-                url
-            });
-            res.status(201).json(newFoto)
-        } else {
-            res.status(400).json({message: "Dato invalido"});
-        }
+        const newFoto = await Foto.create({});
+        res.status(201).json(newFoto)
+        
     } catch (error) {
         res.json({error:`${error}`})
         console.log(error)
@@ -45,7 +38,7 @@ export const getFoto = async(req, res) =>{
                 }
             });
             if(foto != null){
-                res.status(200).json(foto)
+                res.status(200).json({url:`http://themaisonbleue.com:4080/${idFoto}.jpg`})
             }else{
                 res.sendStatus(204);
             }

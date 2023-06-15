@@ -75,13 +75,18 @@ export const getProducto = async(req, res) =>{
 export const updateProducto = async(req,res) =>{
     try {
         const {idProducto} = req.params;
-        const {idFoto,descripcion,existencia} = req.body;
+        const {descripcion,existencia,idTienda,precio,idFoto,titulo} = req.body;
         const producto = await Producto.findByPk(idProducto);
         if(producto != null ){
             if(idFoto > 0 ){
-                producto.idFoto = idFoto;
+                producto.idProducto = idProducto;
                 producto.descripcion = descripcion;
                 producto.existencia = existencia;
+                producto.idTienda = idTienda;
+                producto.precio = precio;
+                producto.idFoto = idFoto,
+                producto.titulo = titulo;
+                
                 if (await producto.save() != null){
                     res.status(200).json(producto);
                 }else{
