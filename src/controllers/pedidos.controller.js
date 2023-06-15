@@ -2,8 +2,12 @@ import {Pedido} from '../models/Pedido.js';
 
 export const createPedido = async (req, res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTienda,idUsuarioComprador, idUsuarioVendedor} = req.body;
-
         if (idTienda>0 && idUsuarioComprador>0 && idUsuarioVendedor>0) {
             const newPedido= await Pedido.create({
                 idTienda,
@@ -23,6 +27,11 @@ export const createPedido = async (req, res) =>{
 
 export const getPedidos = async (req, res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const pedidos = await Pedido.findAll();
         if(pedidos !=null){
             res.json(pedidos)
@@ -37,9 +46,13 @@ export const getPedidos = async (req, res) =>{
 }
 
 export const getPedido = async(req, res) =>{
-    const {idPedido} = req.params;
-
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
+        const {idPedido} = req.params;
         const pedido = await Pedido.findOne({
             where: {
                 idPedido,
@@ -59,6 +72,11 @@ export const getPedido = async(req, res) =>{
 }
 
 export const updatePedido = async(req,res) =>{
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = jwt.verify(token, secret);
+    if (Date.now > payload.exp) {
+        return res.status({error: "token expirado"}) 
+    }
     const {idPedido} = req.params;
     let pedido = await Pedido.findByPk(idPedido);
     const {idTienda,idUsuarioComprador, idUsuarioVendedor} = req.body;
@@ -88,6 +106,11 @@ export const updatePedido = async(req,res) =>{
 
 export const deletePedido = async(req,res) => {
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idPedido} = req.params;
         const pedido = await Pedido.findByPk(idPedido);
         

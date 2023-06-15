@@ -3,6 +3,11 @@ import {Producto} from '../models/Producto.js';
 
 export const createProducto = async (req, res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {descripcion,existencia,idTienda,precio,titulo} = req.body;
         if(idFoto>0 && existencia>0 && idTienda>0 && precio>0){
             const newProducto = await Producto.create({
@@ -29,6 +34,11 @@ export const createProducto = async (req, res) =>{
 
 export const getProductos = async (req, res) =>{
     try{
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const productos = await Producto.findAll();
 
         if(productos != null){
@@ -45,34 +55,42 @@ export const getProductos = async (req, res) =>{
 }
 
 export const getProducto = async(req, res) =>{
+    const token = req.headers.authorization.split(" ")[1];
+    const payload = jwt.verify(token, secret);
+    if (Date.now > payload.exp) {
+        return res.status({error: "token expirado"}) 
+    }
     const {idProducto} = req.params;
-            try {
-                if(idProducto>0){
-                    const producto = await Producto.findOne({
-                        where: {
-                            idProducto,
-                        }
-                    });
-                    if(producto!=null){
-                        res.status(200).json(producto)
-                    }else{
-                        res.sendStatus(204);
-                    }
-                }else{
-                    res.status(400);
-                    res.json({message: "Datos invalidos"});
+    try {
+        if(idProducto>0){
+            const producto = await Producto.findOne({
+                where: {
+                    idProducto,
                 }
-
-                 
-            } catch (error) {
-                console.log(error);
-                res.json({error:`${error}`});
-            }    
-        }
+            });
+            if(producto!=null){
+                res.status(200).json(producto)
+            }else{
+                res.sendStatus(204);
+            }
+        }else{
+            res.status(400);
+            res.json({message: "Datos invalidos"});
+        }       
+    } catch (error) {
+        console.log(error);
+        res.json({error:`${error}`});
+    }    
+}
      
 
 export const updateProducto = async(req,res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idProducto} = req.params;
         const {descripcion,existencia,idTienda,precio,titulo} = req.body;
         const producto = await Producto.findByPk(idProducto);
@@ -104,6 +122,11 @@ export const updateProducto = async(req,res) =>{
 
 export const deleteProducto = async(req,res) => {
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idProducto} = req.params;
         if(idProducto>0){
             await Producto.destroy({

@@ -2,6 +2,11 @@ import {TarjetaRecarga} from '../models/TarjetaRecarga.js';
 
 export const createTarjeta = async (req, res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTienda,monto} = req.body;
         if (monto>0) {
             const newTarjeta = await TarjetaRecarga.create({
@@ -22,6 +27,11 @@ export const getTarjeta = async(req, res) =>{
     const {idTarjeta} = req.params;
 
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const tarjeta = await TarjetaRecarga.findOne({
             where: {
                 idTarjeta,
@@ -35,6 +45,11 @@ export const getTarjeta = async(req, res) =>{
 
 export const updateTarjeta = async(req,res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTarjeta} = req.params;
         const {idTienda, monto} = req.body;
 
@@ -52,6 +67,11 @@ export const updateTarjeta = async(req,res) =>{
 
 export const updateMonto = async(req,res) =>{
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTarjeta} = req.params;
         const {monto} = req.body;
 
@@ -68,6 +88,11 @@ export const updateMonto = async(req,res) =>{
 
 export const deleteTarjeta = async(req,res) => {
     try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
         const {idTarjeta} = req.params;
 
         await TarjetaRecarga.destroy({
