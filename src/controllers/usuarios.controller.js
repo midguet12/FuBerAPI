@@ -92,7 +92,10 @@ export const autenticarUsuario = async(req,res) =>{
                 exp: Date.now() + 86400 * 1000
             }, secret);
             console.log(token);
-            res.json({token:`${token}`})
+            res.json({
+                token:`${token}`,
+                usuario
+            })
         }else{
             res.json({token:"no"})
         }

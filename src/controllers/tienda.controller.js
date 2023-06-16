@@ -36,6 +36,7 @@ export const createTienda = async (req, res) =>{
 }
 
 export const getTiendas = async (req, res) =>{
+    //console.log(req.headers.authorization.split(" ")[1]);
     try{
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, secret);
@@ -44,14 +45,16 @@ export const getTiendas = async (req, res) =>{
         }
         const tiendas = await Tienda.findAll();
         if(tiendas != null){
+            //console.log(tiendas)
             res.status(200).json(tiendas);
         }else{
             res.sendStatus(204).json();
         }
         
     }catch(error){
-        res.json({mensage: `${error}`});
         console.log(error);
+        res.json({mensage: `${error}`});
+        
     }
 }
 
