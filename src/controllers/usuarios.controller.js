@@ -39,17 +39,6 @@ function getRandomIntInclusive(min,max) {
 
 export const createUsuario = async (req, res) =>{
     try {
-        client.messages
-            .create({
-                body: 'Hola, me llamo Fuborcito, este es tu codigo de verificacion',
-                from: '+12545664494',
-                to: '+529982935090'
-            })
-            .then(message => console.log(message.sid));
-    } catch (error) {
-        console.log(error)
-    }
-    /*try {
         const {celular, contrasena, correo, nombreApellidos} = req.body;
 
         const saldo = 0;
@@ -66,7 +55,7 @@ export const createUsuario = async (req, res) =>{
 
     } catch (error) {
         res.json({error})
-    }*/
+    }
 }
 
 export const getUsuarios = async (req, res) =>{

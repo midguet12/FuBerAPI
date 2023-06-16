@@ -3,7 +3,7 @@ import {createTarjeta,getTarjeta,updateTarjeta,updateMonto,deleteTarjeta} from '
 const router = Router();
 
 //Crear 
-router.post('/tarjeta/:monto&:celular', createTarjeta);
+router.post('/tarjetarecarga', createTarjeta);
 //Obtener individual
 router.get('/tarjeta/:idTarjeta', getTarjeta);
 //Actualizar toda la tarjeta

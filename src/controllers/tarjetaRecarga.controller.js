@@ -1,4 +1,14 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
+
 import {TarjetaRecarga} from '../models/TarjetaRecarga.js';
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const secret = process.env.SECRET;
+import clientx from 'twilio'
+const client = require('twilio')(accountSid, authToken);
 
 export const createTarjeta = async (req, res) =>{
     try {
@@ -7,12 +17,20 @@ export const createTarjeta = async (req, res) =>{
         if (Date.now > payload.exp) {
             return res.status({error: "token expirado"}) 
         }
-        const {idTienda,monto} = req.body;
+        const {idTienda, monto, celular} = req.body;
         if (monto>0) {
             const newTarjeta = await TarjetaRecarga.create({
                 idTienda,
                 monto
             });
+            client.messages
+            .create({
+                body: `Hola, me llamo Fuborcito, este es tu codigo de recarga: ${newTarjeta.idTarjeta}`,
+                from: '+12545664494',
+                to: celular
+            })
+            .then(message => console.log(message.sid));
+            
             res.status(201).json(newTarjeta);
         } else {
             res.status(400).json({message: "Monto invalido"});
