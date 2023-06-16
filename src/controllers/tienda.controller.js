@@ -58,6 +58,33 @@ export const getTiendas = async (req, res) =>{
     }
 }
 
+export const getTiendaPorIdUsuario = async(req, res) =>{
+    const {idUsuario} = req.params;
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
+        if (idUsuario>0) {
+            const tienda = await Tienda.findOne({
+                where:{
+                    idUsuario
+                }
+            })
+            if(tienda!=null){
+                res.status(200).json(tienda)
+            }else{
+                res.sendStatus(204);
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({error:`${error}`});
+    }
+
+}
+
 export const getTienda = async(req, res) =>{
     const {idTienda} = req.params;
     try {

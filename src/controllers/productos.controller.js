@@ -8,6 +8,7 @@ export const createProducto = async (req, res) =>{
     try {
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, secret);
+        
         if (Date.now > payload.exp) {
             return res.status({error: "token expirado"}) 
         }
@@ -47,7 +48,7 @@ export const getProductos = async (req, res) =>{
 
         if(productos != null){
             res.status(200).json(productos);
-            console.log(productos)
+            //console.log(productos)
         }else{
             res.sendStatus(204).json();
         }
@@ -74,7 +75,7 @@ export const getProductosTienda = async (req, res)=>{
 
         if(productos != null){
             res.status(200).json(productos);
-            console.log(productos)
+            //console.log(productos)
         }else{
             res.sendStatus(204).json();
         }

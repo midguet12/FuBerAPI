@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createUsuario, getUsuarios, getUsuario, updateUsuario, deleteUsuario, autenticarUsuario} from '../controllers/usuarios.controller.js'
+import {createUsuario, getUsuarios, getUsuario, updateUsuario, deleteUsuario, autenticarUsuario, obtenerOTP} from '../controllers/usuarios.controller.js'
 const router = Router();
 
 //Crear 
@@ -14,6 +14,7 @@ router.get('/usuario/iniciarsesion/:correo&:contrasena',autenticarUsuario)
 router.put('/usuario/:idUsuario', updateUsuario);
 //Eliminar
 router.delete('/usuario/:idUsuario', deleteUsuario)
+router.post('/usuariootp/:celular',obtenerOTP)
 
 
 export default router;

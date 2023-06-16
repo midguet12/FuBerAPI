@@ -1,13 +1,55 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+const secret = process.env.SECRET;
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+
 import {Usuario} from '../models/Usuario.js';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config'
+import clientx from 'twilio'
+const client = require('twilio')(accountSid, authToken);
 
-const secret = process.env.SECRET;
 
+export const obtenerOTP = async(req,res) =>{
+    const {celular} = req.params
+    const otp = getRandomIntInclusive(100000,999999);
+    console.log(otp)
+    try {
+        client.messages
+            .create({
+                body: `Hola, me llamo Fuborcito, este es tu codigo de verificacion: ${otp}`,
+                from: '+12545664494',
+                to: celular
+            })
+            .then(message => console.log(message.sid));
+        res.json(otp);    
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+function getRandomIntInclusive(min,max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
 
 export const createUsuario = async (req, res) =>{
     try {
+        client.messages
+            .create({
+                body: 'Hola, me llamo Fuborcito, este es tu codigo de verificacion',
+                from: '+12545664494',
+                to: '+529982935090'
+            })
+            .then(message => console.log(message.sid));
+    } catch (error) {
+        console.log(error)
+    }
+    /*try {
         const {celular, contrasena, correo, nombreApellidos} = req.body;
 
         const saldo = 0;
@@ -24,7 +66,7 @@ export const createUsuario = async (req, res) =>{
 
     } catch (error) {
         res.json({error})
-    }
+    }*/
 }
 
 export const getUsuarios = async (req, res) =>{
