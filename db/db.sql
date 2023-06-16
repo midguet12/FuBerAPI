@@ -64,3 +64,5 @@ create table TarjetaRecarga(
     monto float,
     primary key(idTarjeta)
 );
+
+alter table Tienda add foreign key (idUsuario) references Usuario(idUsuario);

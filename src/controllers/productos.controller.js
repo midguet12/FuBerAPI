@@ -1,5 +1,8 @@
-import {Console} from 'console';
 import {Producto} from '../models/Producto.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
+
+const secret = process.env.SECRET;
 
 export const createProducto = async (req, res) =>{
     try {
@@ -9,7 +12,7 @@ export const createProducto = async (req, res) =>{
             return res.status({error: "token expirado"}) 
         }
         const {descripcion,existencia,idTienda,precio,titulo} = req.body;
-        if(idFoto>0 && existencia>0 && idTienda>0 && precio>0){
+        if(existencia>0 && idTienda>0 && precio>0){
             const newProducto = await Producto.create({
                 descripcion,
                 existencia,
@@ -27,6 +30,7 @@ export const createProducto = async (req, res) =>{
             res.json({message:"Datos invalidos"});
         }
     } catch (error) {
+        //console.log(error)
         res.send({error:`${error}`});
         res.status(500);
     }
@@ -40,6 +44,33 @@ export const getProductos = async (req, res) =>{
             return res.status({error: "token expirado"}) 
         }
         const productos = await Producto.findAll();
+
+        if(productos != null){
+            res.status(200).json(productos);
+            console.log(productos)
+        }else{
+            res.sendStatus(204).json();
+        }
+        
+    }catch(error){
+        res.json({mensage: `${error}`});
+        console.log(error);
+    }
+}
+
+export const getProductosTienda = async (req, res)=>{
+    const {idTienda} = req.params;
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const payload = jwt.verify(token, secret);
+        if (Date.now > payload.exp) {
+            return res.status({error: "token expirado"}) 
+        }
+        const productos = await Producto.findAll({
+            where: {
+                idTienda
+            }
+        });
 
         if(productos != null){
             res.status(200).json(productos);
